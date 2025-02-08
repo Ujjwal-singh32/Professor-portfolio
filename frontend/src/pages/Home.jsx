@@ -1,10 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const sections = [
+    { name: "About the Professor", route: "/about" },
+    { name: "Research Papers", route: "/research" },
+    { name: "Projects", route: "/projects" },
+    { name: "Conferences", route: "/conferences" },
+    { name: "Achievements", route: "/achievements" },
+    { name: "Blog Posts", route: "/blog" },
+    { name: "Teaching Experience", route: "/teachingexp" },
+    { name: "Awards", route: "/awards" },
+    { name: "Collaborations", route: "/collab" },
+  ];
+   const handleHome = () =>{
+    navigate("/");
+   }
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-400 to-blue-500 text-gray-900">
       {/* Hero Section */}
       <header
-        className="relative text-white py-32 text-center bg-opacity-80 bg-cover bg-center"
+        className="relative text-white py-32 text-center bg-opacity-80 bg-cover bg-center cursor-pointer"
         style={{
           backgroundImage:
             "url('https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')",
@@ -21,39 +39,18 @@ const HomePage = () => {
       </header>
 
       {/* Sections Grid */}
-      <section className="container mx-auto p-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
-        {/* About Section */}
-        <div
-          id="about"
-          className="bg-white p-8 shadow-2xl rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-lg cursor-pointer hover:bg-purple-200 hover:text-white"
-        >
-          <h3 className="text-2xl font-semibold text-gray-900 text-center">
-            About the Professor
-          </h3>
-          <p className="text-gray-600 mt-4 text-center">
-            A brief introduction about the professor, their research interests,
-            and academic background.
-          </p>
-        </div>
-        {[
-          "Research Papers",
-          "Projects",
-          "Conferences",
-          "Achievements",
-          "Blog Posts",
-          "Teaching Experience",
-          "Awards",
-          "Collaborations",
-        ].map((section) => (
+      <section className="container mx-auto p-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {sections.map((section) => (
           <div
-            key={section}
-            className="bg-white p-8 shadow-2xl rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-lg cursor-pointer  hover:bg-purple-200 hover:text-white"
+            key={section.name}
+            className="bg-white p-8 shadow-2xl rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-lg cursor-pointer hover:bg-purple-200 hover:text-white"
+            onClick={() => navigate(section.route)}
           >
             <h3 className="text-2xl font-semibold text-gray-900 text-center">
-              {section}
+              {section.name}
             </h3>
             <p className="text-gray-600 mt-4 text-center">
-              View all {section.toLowerCase()}.
+              View all {section.name.toLowerCase()}.
             </p>
           </div>
         ))}
