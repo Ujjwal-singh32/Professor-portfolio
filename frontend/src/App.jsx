@@ -2,25 +2,34 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/Home";
+import Conferences from "./pages/Conferences";
+import About from "./pages/About";
+import BlogPosts from "./pages/Blogposts";
+import Achievements from "./pages/Achivements";
+import Projects from "./pages/Projects";
+import Awards from "./pages/Awards";
+import TeachingExperience from "./pages/Teachingexp";
+import AdminPanel from "./pages/Adminpannel";
+import ResearchPapers from "./pages/Researchpaper";
+import Collaborations from "./pages/Collabrations";
+import BlogDetails from "./pages/BlogDetails";
 const App = () => {
   return (
     <div>
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* <Route path="/cars" element={<Cars />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:token" element={<ResetPass />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/conferences" element={<Conferences />} />
         <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/notification" element={<Notification />} />
-        <Route path="/my-bookings" element={<Bookings />} />
-        <Route path="/car-details/:carId" element={<CarDetails />} />
-        <Route path="/payment/:id" element={<Payment />} />
-        <Route path="/notify/:bookingId" element={<Notify />} /> */}
+        <Route path="/blog" element={<BlogPosts />} />
+        <Route path="/achievements" element={<Achievements />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/awards" element={<Awards />} />
+        <Route path="/teachingexp" element={<TeachingExperience />} />
+        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/research" element={<ResearchPapers />} />
+        <Route path="/collab" element={<Collaborations />} />
+        <Route path="/blog/:id" element={<BlogDetails />} />
       </Routes>
     </div>
   );
