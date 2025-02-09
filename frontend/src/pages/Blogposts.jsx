@@ -1,31 +1,55 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext.jsx";
 
 const BlogPosts = () => {
-  const blogList = [
-    { title: "The Future of Artificial Intelligence", description: "Exploring trends and advancements in AI technology.", date: "Jan 10, 2024", link: "#" },
-    { title: "Ethical Challenges in Machine Learning", description: "Discussing fairness and bias in AI models.", date: "Feb 15, 2024", link: "#" },
-    { title: "Blockchain Beyond Cryptocurrency", description: "Understanding blockchain applications in various industries.", date: "Mar 5, 2024", link: "#" },
-    { title: "How IoT is Revolutionizing Smart Cities", description: "Analyzing the impact of IoT on urban development.", date: "Apr 22, 2024", link: "#" },
-    { title: "Quantum Computing: A Game Changer", description: "An introduction to quantum computing and its potential.", date: "May 18, 2024", link: "#" },
-    { title: "Data Science in Healthcare", description: "How big data is transforming the medical field.", date: "Jun 8, 2024", link: "#" },
-  ];
+  const navigate = useNavigate();
+  const { blogs } = useContext(UserContext); // Ensure blogs is always an array
+
+  if (!blogs || blogs.length === 0) {
+    return <p className="text-center text-gray-500">No blog posts available.</p>;
+  }
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-gradient-to-r from-blue-100 to-blue-300 shadow-lg rounded-lg">
-      {/* Header */}
-      <h1 className="text-4xl font-bold text-center text-white drop-shadow-lg">Blog Posts</h1>
-      <p className="text-lg text-center text-gray-100 mt-2">Insights, research, and discussions from various fields.</p>
-      
-      {/* Blog Posts List - Row-wise */}
+    <div className="max-w-5xl mx-auto p-6 bg-gradient-to-r from-blue-100 to-blue-300 shadow-lg rounded-lg mt-10 mb-10">
+      <h1 className="text-4xl font-bold text-center text-black drop-shadow-lg">
+        Blog Posts
+      </h1>
+      <p className="text-lg text-center text-black-100 mt-2">
+        Insights, research, and discussions from various fields.
+      </p>
+
       <div className="mt-8 flex flex-col space-y-6">
-        {blogList.map((blog, index) => (
-          <div key={index} className="bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row justify-between items-center">
+        {blogs.map((blog) => (
+          <div
+            key={blog._id}
+            className="bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row justify-between items-center"
+          >
             <div>
-              <h2 className="text-xl font-semibold text-gray-800">{blog.title}</h2>
-              <p className="text-gray-700 mt-2">{blog.description}</p>
-              <p className="text-sm text-gray-500 mt-1">Date: {blog.date}</p>
+              <h2 className="text-xl font-semibold text-gray-800">
+                {blog.title}
+              </h2>
+              <p className="text-gray-700 mt-2">
+                {blog.category.length > 15
+                  ? blog.category.slice(0, 15) + "..."
+                  : blog.category}
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                Date:{" "}
+                {new Date(blog.date).toLocaleDateString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
             </div>
-            <a href={blog.link} className="mt-4 md:mt-0 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Read More</a>
+            <p
+              className="mt-4 md:mt-0 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer"
+              onClick={() => navigate(`/blog/${blog._id}`)}
+            >
+              Read More
+            </p>
           </div>
         ))}
       </div>

@@ -1,17 +1,23 @@
 import express from "express";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-
 import cors from "cors";
+import "dotenv/config";
+import connectDB from "./config/mongodb.js";
+import connectCloudinary from "./config/cloudinary.js";
+import blogRouter from "./routes/blogRoutes.js";
+//App config
 const app = express();
-dotenv.config();
+const port = process.env.PORT || 4001;
+connectDB();
+connectCloudinary();
 
-const port = process.env.PORT;
-const MONOGO_URL = process.env.MONOGO_URI;
-app.use(
-    cors({
-      origin: process.env.FRONTEND_URL,
-      credentials: true,
-      methods: ["GET", "POST", "PUT", "DELETE"],
-    })
-  );
+// middleware
+app.use(express.json());
+app.use(cors());
+
+// Api endpoints for the app
+app.use("/api/blogs",  blogRouter)
+app.get("/", (req, res) => {
+  res.send("API Working");
+});
+
+app.listen(port, () => console.log(`Server Running On Port ${port}`));

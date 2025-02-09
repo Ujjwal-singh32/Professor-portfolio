@@ -13,9 +13,11 @@ import AdminPanel from "./pages/Adminpannel";
 import ResearchPapers from "./pages/Researchpaper";
 import Collaborations from "./pages/Collabrations";
 import BlogDetails from "./pages/BlogDetails";
+import {ToastContainer} from 'react-toastify';
 const App = () => {
   return (
     <div>
+      <ToastContainer></ToastContainer>
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />

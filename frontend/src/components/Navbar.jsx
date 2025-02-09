@@ -1,15 +1,25 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [filters, setFilters] = useState({
     blogs: false,
     researchPapers: false,
+    projects: false,
   });
+
+  const navigate = useNavigate();
 
   const toggleFilter = () => {
     setIsFilterOpen(!isFilterOpen);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   const handleFilterChange = (event) => {
@@ -19,43 +29,81 @@ const Navbar = () => {
 
   return (
     <nav
-      className="shadow-md py-4 px-6 flex justify-between items-center relative"
+      className="shadow-md py-4 px-6 flex justify-between items-center sticky top-0 z-50 cursor-pointer"
       style={{
         background:
           "linear-gradient(90deg, rgba(88,58,180,0.824) 10%, rgba(131,58,180,0.821) 55%, rgba(252,69,202,0.709) 93%, rgba(253,29,29,0.611) 100%)",
       }}
     >
       <div className="flex items-center space-x-4">
-        <img
-          src="https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt="Professor"
-          className="w-12 h-12 rounded-full border-2 border-white"
-        />
-        <h1 className="text-2xl font-bold text-white hidden md:block">
+        <h1
+          className="text-2xl font-bold text-white hidden md:block"
+          onClick={() => navigate("/")}
+        >
           Dinesh Kumar
         </h1>
       </div>
 
       <div className="hidden md:flex space-x-6">
-        <a
-          href="#projects"
+        <p
+          onClick={() => navigate("/projects")}
           className="text-white font-semibold px-4 py-2 rounded-lg border-2 border-white transition duration-300 hover:bg-white hover:text-purple-600"
         >
           Projects
-        </a>
-        <a
-          href="#research"
+        </p>
+        <p
+          onClick={() => navigate("/research")}
           className="text-white font-semibold px-4 py-2 rounded-lg border-2 border-white transition duration-300 hover:bg-white hover:text-purple-600"
         >
           Research
-        </a>
-        <a
-          href="#admin"
+        </p>
+        <p
+          onClick={() => navigate("/admin")}
           className="text-white font-semibold px-4 py-2 rounded-lg border-2 border-white transition duration-300 hover:bg-white hover:text-purple-600"
         >
           Admin
-        </a>
+        </p>
       </div>
+
+      {/* Mobile Menu Button */}
+      <div className="md:hidden flex items-center mr-3">
+        <button onClick={toggleMenu} className="text-white text-2xl">
+          {isMenuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="absolute top-16 right-4 w-40 bg-white text-black rounded-lg shadow-lg p-4 z-50 flex flex-col space-y-2">
+          <p
+            onClick={() => {
+              setIsMenuOpen(false);
+              navigate("/projects");
+            }}
+            className="cursor-pointer px-4 py-2 rounded-lg hover:bg-gray-200"
+          >
+            Projects
+          </p>
+          <p
+            onClick={() => {
+              setIsMenuOpen(false);
+              navigate("/research");
+            }}
+            className="cursor-pointer px-4 py-2 rounded-lg hover:bg-gray-200"
+          >
+            Research
+          </p>
+          <p
+            onClick={() => {
+              setIsMenuOpen(false);
+              navigate("/admin");
+            }}
+            className="cursor-pointer px-4 py-2 rounded-lg hover:bg-gray-200"
+          >
+            Admin
+          </p>
+        </div>
+      )}
 
       <div className="flex space-x-2 relative">
         <input
