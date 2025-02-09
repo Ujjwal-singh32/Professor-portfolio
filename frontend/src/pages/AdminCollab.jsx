@@ -47,7 +47,7 @@ const AdminPanelcollab = () => {
     try {
       if (editDoc) {
         const response = await axios.put(
-          `${backendUrl}/api/collab/update-collab/${newDoc._id}`,
+          `${backendUrl}/api/collab/update-collab/${newDoc.id}`,
           {
             title: newDoc.title,
             description: newDoc.description,

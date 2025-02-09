@@ -43,7 +43,7 @@ const HomePage = () => {
         {sections.map((section) => (
           <div
             key={section.name}
-            className="bg-white p-8 shadow-2xl rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-lg cursor-pointer hover:bg-purple-200 hover:text-white"
+            className="bg-white p-8 shadow-2xl rounded-xl transform transition-all duration-300 ease-out hover:scale-110 hover:rotate-2 hover:shadow-xl cursor-pointer hover:bg-pink-300 hover:text-white"
             onClick={() => navigate(section.route)}
           >
             <h3 className="text-2xl font-semibold text-gray-900 text-center">
