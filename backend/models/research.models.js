@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
-const projectSchema = new mongoose.Schema({
+const ResearchSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
   },
 
-  projectImage: {
+  ResearchImage: {
     type: String,
     default: "",
   },
-  category: {
+  topic: {
     type: String,
     required: true,
     maxlength: 15,
@@ -22,9 +22,9 @@ const projectSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  members: {
+  authors: {
     type: [String],
     default: [],
   },
 });
-export const ProjectModel = mongoose.model("Project", projectSchema);
+export const ResearchModel = mongoose.model("Research", ResearchSchema);

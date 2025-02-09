@@ -1,17 +1,14 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext.jsx";
 
 const BlogPosts = () => {
   const navigate = useNavigate();
-  const { blogs } = useContext(UserContext); // Ensure blogs is always an array
-
-  if (!blogs || blogs.length === 0) {
-    return <p className="text-center text-gray-500">No blog posts available.</p>;
-  }
-
+  const { blogs } = useContext(UserContext);
+ 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-gradient-to-r from-blue-100 to-blue-300 shadow-lg rounded-lg mt-10 mb-10">
+      {/* Header */}
       <h1 className="text-4xl font-bold text-center text-black drop-shadow-lg">
         Blog Posts
       </h1>
@@ -19,6 +16,7 @@ const BlogPosts = () => {
         Insights, research, and discussions from various fields.
       </p>
 
+      {/* Blog Posts List - Row-wise */}
       <div className="mt-8 flex flex-col space-y-6">
         {blogs.map((blog) => (
           <div

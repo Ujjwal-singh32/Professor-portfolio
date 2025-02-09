@@ -1,6 +1,8 @@
 import React from "react";
-import { createContext, useEffect ,useState} from "react";
+import { createContext, useEffect } from "react";
 import axios from "axios";
+import { useState } from "react";
+import { createBlog } from "../../../backend/controllers/blogController";
 
 export const UserContext = createContext();
 
@@ -11,10 +13,8 @@ const UserContextProvider = (props) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [research, setresearch] = useState([]);
-  const [achieve, setachieve] = useState([]);
-  const [project, setproject] = useState([]);
-  const [conference, setconference] = useState([]);
-  const [award, setaward] = useState([]);
+const [project, setproject] = useState([])
+const [achievements , setachievements] = useState([]);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -22,7 +22,7 @@ const UserContextProvider = (props) => {
         const response = await axios.get(
           `${backendUrl}/api/blogs/get-total-blogs`
         );
-        // console.log(response.data.blogs);
+        console.log(response.data.blogs);
         setBlogs(response.data.blogs);
       } catch (err) {
         setError(err.message);
@@ -40,7 +40,7 @@ const UserContextProvider = (props) => {
         const response = await axios.get(
           `${backendUrl}/api/researchs/get-total-researchs`
         );
-        // console.log(response.data.Researchs);
+        console.log(response.data.Researchs);
         setresearch(response.data.Researchs);
       } catch (err) {
         setError(err.message);
@@ -58,7 +58,7 @@ const UserContextProvider = (props) => {
         const response = await axios.get(
           `${backendUrl}/api/projects/get-total-projects`
         );
-        // console.log(response.data.projects);
+        console.log(response.data.projects);
         setproject(response.data.projects);
       } catch (err) {
         setError(err.message);
@@ -70,13 +70,13 @@ const UserContextProvider = (props) => {
     fetchProjects();
   }, [backendUrl]);
   useEffect(() => {
-    const fetchach = async () => {
+    const fetchachievement = async () => {
       try {
         const response = await axios.get(
-          `${backendUrl}/api/achive/get-total-achives`
+          `${backendUrl}/api/achive/get-total-achieves`
         );
-        //  console.log(response.data.ach);
-        setachieve(response.data.ach);
+        console.log(response.data.ach);
+        setachievements(response.data.ach);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -84,59 +84,18 @@ const UserContextProvider = (props) => {
       }
     };
 
-    fetchach();
-  }, [backendUrl]);
-
-  useEffect(() => {
-    const fetchConf = async () => {
-      try {
-        const response = await axios.get(
-          `${backendUrl}/api/conference/get-total-Conferences`
-        );
-        // console.log(response.data.blogs);
-        setconference(response.data.conf);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchConf();
-  }, [backendUrl]);
-
-  useEffect(() => {
-    const fetchaward = async () => {
-      try {
-        const response = await axios.get(
-          `${backendUrl}/api/award/get-total-awards`
-        );
-        // console.log(response.data.blogs);
-        setaward(response.data.award);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchaward();
+    fetchachievement();
   }, [backendUrl]);
   //console.log(research);
   //console.log(project)
-  // console.log(achieve)
-  // console.log(award);
-  // console.log(conference);
+  console.log(achievements);
   const value = {
     blogs,
     loading,
     error,
     backendUrl,
     research,
-    project,
-    achieve,
-    conference,
-    award,
+    project
   };
 
   return (

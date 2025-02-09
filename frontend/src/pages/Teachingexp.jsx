@@ -2,10 +2,10 @@ import React from "react";
 
 const TeachingExperience = () => {
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gradient-to-r from-indigo-200 to-blue-300 shadow-lg rounded-lg">
+    <div className="max-w-4xl mx-auto p-6 bg-gradient-to-r from-indigo-200 to-blue-300 shadow-lg rounded-lg mt-10 mb-10">
       {/* Header */}
-      <h1 className="text-4xl font-bold text-center text-white drop-shadow-lg">Teaching Experience</h1>
-      <p className="text-lg text-center text-gray-100 mt-2">An overview of courses taught and academic contributions.</p>
+      <h1 className="text-4xl font-bold text-center text-black drop-shadow-lg">Teaching Experience</h1>
+      <p className="text-lg text-center text-black-100 mt-2">An overview of courses taught and academic contributions.</p>
       
       {/* Experience List */}
       <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
