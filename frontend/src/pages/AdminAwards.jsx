@@ -89,7 +89,7 @@ const AdminPanelAward = () => {
       }}
     >
       <div className="p-12 shadow-lg rounded-lg text-center w-full max-w-4xl text-white">
-        <h1 className="text-7xl font-extrabold text-white mb-6">Admin Panel</h1>
+        <h1 className="text-7xl font-extrabold text-white mb-6">Award Admin Panel</h1>
 
         {/* Buttons Section */}
         <div className="space-x-4 mb-6">
@@ -120,7 +120,7 @@ const AdminPanelAward = () => {
         {(action === "add" || editDoc) && (
           <div className="mt-4 p-6 bg-gray-500 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold text-white mb-4">
-              {editDoc ? "Edit Research" : "Add a New Research"}
+              {editDoc ? "Edit Award" : "Add a New Award"}
             </h2>
             <input
               name="name"

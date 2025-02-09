@@ -9,7 +9,8 @@ const AdminPanel = () => {
     "Projects",
     "Conferences",
     "Achievements",
-    "Awards"
+    "Awards",
+    "collab"
   ];
 
   const [selectedSection, setSelectedSection] = useState("");

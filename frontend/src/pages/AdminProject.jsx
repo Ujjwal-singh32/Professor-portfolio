@@ -107,7 +107,7 @@ const AdminPanelProject = () => {
       }}
     >
       <div className="p-12 shadow-lg rounded-lg text-center w-full max-w-4xl text-white">
-        <h1 className="text-7xl font-extrabold text-white mb-6">Admin Panel</h1>
+        <h1 className="text-7xl font-extrabold text-white mb-6">Project Admin Panel</h1>
 
         {/* Buttons Section */}
         <div className="space-x-4 mb-6">
@@ -220,7 +220,7 @@ const AdminPanelProject = () => {
               onClick={handleSubmit}
               className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
             >
-              {editDoc ? "Update Research" : "Save Research"}
+              {editDoc ? "Update Project" : "Save Project"}
             </button>
           </div>
         )}

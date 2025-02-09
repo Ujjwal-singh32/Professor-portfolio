@@ -31,7 +31,7 @@ const ResearchDetails = () => {
   if (loading) return <p className="text-center text-gray-600">Loading...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (!research)
-    return <p className="text-center text-gray-500">Reseacrh not found.</p>;
+    return <p className="text-center text-gray-500">Research not found.</p>;
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10 mb-10">

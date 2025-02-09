@@ -1,5 +1,5 @@
 import React from "react";
-import { createContext, useEffect ,useState} from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 
 export const UserContext = createContext();
@@ -15,7 +15,7 @@ const UserContextProvider = (props) => {
   const [project, setproject] = useState([]);
   const [conference, setconference] = useState([]);
   const [award, setaward] = useState([]);
-
+  const [collaborators, setcollaborators] = useState([]);
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
@@ -68,6 +68,25 @@ const UserContextProvider = (props) => {
     };
 
     fetchProjects();
+    const interval = setInterval(fetchProjects(), 3000);
+    return () => clearInterval(interval);
+  }, [backendUrl]);
+  useEffect(() => {
+    const fetchcollab = async () => {
+      try {
+        const response = await axios.get(
+          `${backendUrl}/api/collab/get-total-collab`
+        );
+         //console.log(response.data.Collabs);
+        setcollaborators(response.data.Collabs);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchcollab();
   }, [backendUrl]);
   useEffect(() => {
     const fetchach = async () => {
@@ -127,6 +146,7 @@ const UserContextProvider = (props) => {
   // console.log(achieve)
   // console.log(award);
   // console.log(conference);
+  //console.log(collaborators);
   const value = {
     blogs,
     loading,
@@ -137,6 +157,7 @@ const UserContextProvider = (props) => {
     achieve,
     conference,
     award,
+    collaborators
   };
 
   return (

@@ -4,28 +4,26 @@ import { UserContext } from "../context/UserContext.jsx";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const AdminPanelResearch = () => {
+const AdminPanelcollab = () => {
   const navigate = useNavigate();
   const [action, setAction] = useState(null);
   const [newDoc, setNewDoc] = useState({
     title: "",
-    ResearchImage: null,
-    topic: "",
     description: "",
     date: "",
     authors: [],
+    id:""
   });
   const [editDoc, setEditDoc] = useState(null);
-  const { research, backendUrl } = useContext(UserContext);
-  console.log(research);
+  const { collaborators, backendUrl } = useContext(UserContext);
+  // console.log(collaborators);
+
   const [author, setAuthor] = useState("");
+
   const handleChange = (e) => {
     setNewDoc({ ...newDoc, [e.target.name]: e.target.value });
   };
 
-  const handleImageChange = (e) => {
-    setNewDoc({ ...newDoc, ResearchImage: e.target.files[0] });
-  };
   const handleAddAuthor = () => {
     if (author.trim() !== "") {
       setNewDoc({ ...newDoc, authors: [...newDoc.authors, author] });
@@ -42,43 +40,47 @@ const AdminPanelResearch = () => {
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append("title", newDoc.title);
-    formData.append("topic", newDoc.topic);
     formData.append("description", newDoc.description);
     formData.append("date", newDoc.date);
-    formData.append("authors" , newDoc.authors)
-    if (newDoc.ResearchImage)
-      formData.append("ResearchImage", newDoc.ResearchImage);
+    formData.append("professors", newDoc.authors);
 
     try {
       if (editDoc) {
         const response = await axios.put(
-          `${backendUrl}/api/researchs/update-researchs/${newDoc._id}`,
-          formData
+          `${backendUrl}/api/collab/update-collab/${newDoc._id}`,
+          {
+            title: newDoc.title,
+            description: newDoc.description,
+            professors: newDoc.authors,
+          }
         );
 
         if (response.data.success) {
-          toast.success("Research Updated");
+          toast.success("collab Updated");
           navigate("/");
         }
       } else {
         const response = await axios.post(
-          `${backendUrl}/api/researchs/send-research`,
-          formData
+          `${backendUrl}/api/collab/send-collab`,
+          {
+            title: newDoc.title,
+            description: newDoc.description,
+            date: newDoc.date,
+            professors: newDoc.authors,
+          }
         );
         if (response.data.success) {
-          toast.success("Research Added");
+          toast.success("collab Added");
           navigate("/");
         }
       }
     } catch (error) {
-      console.error("Error saving research:", error);
-      alert("Failed to save research.");
+      console.error("Error saving collab:", error);
+      alert("Failed to save collab.");
     }
 
     setNewDoc({
       title: "",
-      ResearchImage: null,
-      topic: "",
       description: "",
       date: "",
       authors: [],
@@ -88,10 +90,10 @@ const AdminPanelResearch = () => {
 
   const handleDelete = async (id) => {
     const response = await axios.delete(
-      `${backendUrl}/api/researchs/delete/${id}`
+      `${backendUrl}/api/collab/delete/${id}`
     );
     if (response.data.success) {
-      toast.success("Research Deleted");
+      toast.success("collab Deleted");
       navigate("/");
     }
   };
@@ -107,7 +109,9 @@ const AdminPanelResearch = () => {
       }}
     >
       <div className="p-12 shadow-lg rounded-lg text-center w-full max-w-4xl text-white">
-        <h1 className="text-7xl font-extrabold text-white mb-6">Research Admin Panel</h1>
+        <h1 className="text-7xl font-extrabold text-white mb-6">
+          Collaborations Admin Panel
+        </h1>
 
         {/* Buttons Section */}
         <div className="space-x-4 mb-6">
@@ -138,21 +142,13 @@ const AdminPanelResearch = () => {
         {(action === "add" || editDoc) && (
           <div className="mt-4 p-6 bg-gray-500 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold text-white mb-4">
-              {editDoc ? "Edit Research" : "Add a New Research"}
+              {editDoc ? "Edit Collab" : "Add Collab"}
             </h2>
             <input
               name="title"
               value={newDoc.title}
               onChange={handleChange}
               placeholder="Title"
-              className="w-full p-2 border border-gray-300 rounded mb-3"
-              required
-            />
-            <input
-              name="topic"
-              value={newDoc.topic}
-              onChange={handleChange}
-              placeholder="topic"
               className="w-full p-2 border border-gray-300 rounded mb-3"
               required
             />
@@ -172,15 +168,10 @@ const AdminPanelResearch = () => {
               className="w-full p-2 border border-gray-300 rounded mb-3"
               required
             />
-            <input
-              type="file"
-              onChange={handleImageChange}
-              className="w-full p-2 border border-gray-300 rounded mb-3"
-            />
 
             {/* Authors Section */}
             <div className="mb-3">
-              <h3 className="text-lg font-semibold">Authors</h3>
+              <h3 className="text-lg font-semibold">Professors</h3>
               <div className="flex items-center mb-3">
                 <input
                   type="text"
@@ -194,25 +185,26 @@ const AdminPanelResearch = () => {
                   onClick={handleAddAuthor}
                   className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                 >
-                  Add Author
+                  Add professors
                 </button>
               </div>
               <ul>
-                {newDoc.authors.map((a, index) => (
-                  <li
-                    key={index}
-                    className="flex justify-between p-2 bg-gray-700 rounded mb-2"
-                  >
-                    {a}
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveAuthor(index)}
-                      className="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600"
+                {Array.isArray(newDoc.authors) &&
+                  newDoc.authors.map((a, index) => (
+                    <li
+                      key={index}
+                      className="flex justify-between p-2 bg-gray-700 rounded mb-2"
                     >
-                      Remove
-                    </button>
-                  </li>
-                ))}
+                      {a}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveAuthor(index)}
+                        className="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600"
+                      >
+                        Remove
+                      </button>
+                    </li>
+                  ))}
               </ul>
             </div>
 
@@ -220,14 +212,14 @@ const AdminPanelResearch = () => {
               onClick={handleSubmit}
               className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
             >
-              {editDoc ? "Update Research" : "Save Research"}
+              {editDoc ? "Update collab" : "Save collab"}
             </button>
           </div>
         )}
         {/* Edit Section - List Blogs */}
         {action === "edit" && !editDoc && (
           <div className="mt-4 space-y-4">
-            {research.map((doc) => (
+            {collaborators.map((doc) => (
               <div
                 key={doc._id}
                 className="relative p-6 bg-gray-100 rounded-lg shadow-md"
@@ -236,7 +228,13 @@ const AdminPanelResearch = () => {
                   className="absolute top-2 right-2 px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
                   onClick={() => {
                     setEditDoc(doc);
-                    setNewDoc(doc);
+                    setNewDoc({
+                      title: doc.title || "",
+                      description: doc.description || "",
+                      date: doc.date ? doc.date.split("T")[0] : "", // Formats date correctly
+                      authors: doc.professors || [],
+                      id : doc._id // Ensures authors list is not undefined
+                    });
                   }}
                 >
                   Edit
@@ -248,7 +246,7 @@ const AdminPanelResearch = () => {
                   {doc.title}
                 </h2>
                 <p className="text-gray-600" onChange={handleChange}>
-                  {doc.topic}
+                  {doc.description}
                 </p>
                 {/* <p className="text-sm text-gray-500"  onChange={handleChange}>
                   Date: {new Date(doc.date).toLocaleDateString()}
@@ -261,7 +259,7 @@ const AdminPanelResearch = () => {
         {/* Delete Section */}
         {action === "delete" && (
           <div className="mt-4 space-y-4">
-            {research.map((doc) => (
+            {collaborators.map((doc) => (
               <div
                 key={doc._id}
                 className="relative p-6 bg-gray-100 rounded-lg shadow-md"
@@ -275,7 +273,7 @@ const AdminPanelResearch = () => {
                 <h2 className="text-xl font-semibold text-gray-700">
                   {doc.title}
                 </h2>
-                <p className="text-gray-600">{doc.topic}</p>
+                <p className="text-gray-600">{doc.description}</p>
               </div>
             ))}
           </div>
@@ -285,4 +283,4 @@ const AdminPanelResearch = () => {
   );
 };
 
-export default AdminPanelResearch;
+export default AdminPanelcollab;

@@ -9,6 +9,7 @@ import ResearchRouter from "./routes/researchRoutes.js";
 import AchiveRouter from "./routes/achievementRoutes.js"
 import awardrouter from  "./routes/awardRoutes.js"
 import ConferenceRouter from "./routes/conferenceRoutes.js";
+import CollabRouter from "./routes/collabRoutes.js";
 //App config
 const app = express();
 const port = process.env.PORT || 4001;
@@ -26,7 +27,7 @@ app.use("/api/researchs", ResearchRouter);
 app.use("/api/achive", AchiveRouter);
 app.use("/api/award", awardrouter);
 app.use("/api/conference" , ConferenceRouter)
-
+app.use("/api/collab", CollabRouter)
 app.get("/", (req, res) => {
   res.send("API Working");
 });

@@ -5,20 +5,32 @@ import { UserContext } from "../context/UserContext.jsx";
 const BlogPosts = () => {
   const navigate = useNavigate();
   const { blogs } = useContext(UserContext);
+  const [searchTerm, setSearchTerm] = useState("");
  
+   // Filter projects based on search term
+   const filteredProjects = blogs.filter((p) =>
+     p.title.toLowerCase().includes(searchTerm.toLowerCase())
+   );
   return (
     <div className="max-w-5xl mx-auto p-6 bg-gradient-to-r from-blue-100 to-blue-300 shadow-lg rounded-lg mt-10 mb-10">
       {/* Header */}
-      <h1 className="text-4xl font-bold text-center text-black drop-shadow-lg">
-        Blog Posts
-      </h1>
+      <div className="flex flex-col md:flex-row items-center justify-between">
+        <h1 className="text-4xl font-bold text-center text-black drop-shadow-lg md:ml-4">Blog Posts</h1>
+        <input
+          type="text"
+          placeholder="Search projects..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="p-2 border-3 border-black-300 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+      </div>
       <p className="text-lg text-center text-black-100 mt-2">
         Insights, research, and discussions from various fields.
       </p>
 
       {/* Blog Posts List - Row-wise */}
       <div className="mt-8 flex flex-col space-y-6">
-        {blogs.map((blog) => (
+        {filteredProjects.map((blog) => (
           <div
             key={blog._id}
             className="bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row justify-between items-center"

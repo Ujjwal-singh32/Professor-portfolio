@@ -87,7 +87,7 @@ const AdminPanelBlog = () => {
       }}
     >
       <div className="p-12 shadow-lg rounded-lg text-center w-full max-w-4xl text-white">
-        <h1 className="text-7xl font-extrabold text-white mb-6">Admin Panel</h1>
+        <h1 className="text-7xl font-extrabold text-white mb-6">Blog Admin Panel</h1>
 
         {/* Buttons Section */}
         <div className="space-x-4 mb-6">

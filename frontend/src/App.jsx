@@ -23,6 +23,7 @@ import AdminPanelProject from "./pages/AdminProject";
 import ProjectDetails from "./pages/ProjectDetails";
 import AdminPanelConference from "./pages/AdminConference";
 import AdminPanelAward from "./pages/AdminAwards";
+import AdminPanelcollab from "./pages/AdminCollab";
 const App = () => {
   return (
     <div>
@@ -46,6 +47,7 @@ const App = () => {
         <Route path="/admin/achievements" element={<AdminPanelAchive />} />
         <Route path="/admin/projects" element={<AdminPanelProject />} />
         <Route path="/admin/conferences" element={<AdminPanelConference />} />
+        <Route path="/admin/collab" element={<AdminPanelcollab />} />
         <Route path="/admin/awards" element={<AdminPanelAward />} />
         <Route path="/research/:id" element={<ResearchDetails />} />
         <Route path="/project/:id" element={<ProjectDetails />} />
