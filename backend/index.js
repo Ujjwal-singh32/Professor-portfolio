@@ -18,7 +18,13 @@ connectCloudinary();
 
 // middleware
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://professor-portfolio-frontend.vercel.app", 
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 // Api endpoints for the app
 app.use("/api/blogs", blogRouter);
